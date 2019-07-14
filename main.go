@@ -109,9 +109,9 @@ func main() {
 	go func(conf config, wg *sync.WaitGroup) {
 		defer wg.Done()
 
-		for file := range uploadToS3Chan {
+		for file := range uploadToS3Chan { // TODO: Fix filename
 			s3OutputPath := fmt.Sprintf("dmarc-data/go-upload-test-%s-%s.tsv.gz", time.Now().UTC().Format("20060102-150405"), RandStringBytes(6))
-			S3Upload(
+			S3Upload( // TODO: ERROR CHECKING
 				conf.s3Name,
 				&s3OutputPath,
 				conf.s3Region,
