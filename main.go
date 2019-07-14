@@ -140,6 +140,8 @@ func main() {
 		s3records, err := PollSQS(conf)
 		if err != nil {
 			Error.Printf("Failed to poll SQS: %v", err)
+			pollCount--
+			continue
 		}
 
 		pollCount--
