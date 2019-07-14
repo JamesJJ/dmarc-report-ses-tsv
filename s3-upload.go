@@ -28,9 +28,11 @@ func S3Upload(bucket *string, item *string, region *string, bodyBuf *bytes.Buffe
 
 	// Upload input parameters
 	upParams := &s3manager.UploadInput{
-		Bucket: bucket,
-		Key:    item,
-		Body:   bodyBuf,
+		ACL:                  aws.String("bucket-owner-full-control"),
+		ServerSideEncryption: aws.String("AES256"),
+		Bucket:               bucket,
+		Key:                  item,
+		Body:                 bodyBuf,
 	}
 
 	// Perform an upload.

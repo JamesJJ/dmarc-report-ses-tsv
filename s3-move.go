@@ -11,9 +11,11 @@ import (
 func S3RenameFile(svc *s3.S3, bucket *string, source *string, destination *string) error {
 
 	inputCopy := &s3.CopyObjectInput{
-		Bucket:     aws.String(*bucket),
-		CopySource: aws.String(fmt.Sprintf("%s/%s", *bucket, *source)),
-		Key:        aws.String(*destination),
+		ACL:                  aws.String("bucket-owner-full-control"),
+		ServerSideEncryption: aws.String("AES256"),
+		Bucket:               aws.String(*bucket),
+		CopySource:           aws.String(fmt.Sprintf("%s/%s", *bucket, *source)),
+		Key:                  aws.String(*destination),
 	}
 
 	_, errCopy := svc.CopyObject(inputCopy)
