@@ -156,6 +156,10 @@ func FlattenDMARCRecord(m *ReportMetadata, pp *PolicyPublished, r *Record) ([]st
 
 	}
 
+// TODO: sender hits e.g. 
+// r.AuthResults.SPF.Domain =>
+// https://assets.ctfassets.net/yzco4xsimv0y/2iI1A72XqE0McQcEyKaGCU/f2daf2f06c3f18a9859c4ecb5fb17f42/sending_domains.txt
+
 	a := []string{
 
 		m.ReportID,
