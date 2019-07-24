@@ -3,7 +3,7 @@
 
 # DMARC Report: SES to TSV
 
-*This component aims to provide DMARC Report data in TSV or CSV format, so that it can easily be ingested and visualised by business intelligence or analysis tools, for example AWS .*
+*This component aims to provide DMARC Report data in TSV or CSV format, so that it can easily be ingested and visualised by business intelligence or analysis tools, for example AWS QuickSight.*
 
   1. [AWS Simple Email Service (SES)](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email.html) can easily be set-up to recieve and save email to S3 storage.
   2. Emails saved in to S3 trigger events to be published to an AWS SQS Queue.
@@ -86,4 +86,4 @@ ORDER BY  number desc
 
 #### Simple Quicksight Report Example
 
-<img src="./doc/quicksight-example.png">
+<img src="https://raw.githubusercontent.com/JamesJJ/dmarc-report-ses-tsv/master/doc/quicksight-example.png">
