@@ -1,5 +1,5 @@
-[![Docker Automated build](https://img.shields.io/docker/automated/jamesjj/dmarc-report-ses-tsv.svg)](https://hub.docker.com/r/jamesjj/dmarc-report-ses-tsv/)
-[![Docker Automated build](https://img.shields.io/docker/build/jamesjj/dmarc-report-ses-tsv.svg)](https://hub.docker.com/r/jamesjj/dmarc-report-ses-tsv/)
+[![Docker Automated build](https://img.shields.io/docker/cloud/automated/jamesjj/dmarc-report-ses-tsv)](https://hub.docker.com/r/jamesjj/dmarc-report-ses-tsv/)
+[![Docker Automated build](https://img.shields.io/docker/cloud/build/jamesjj/dmarc-report-ses-tsv)](https://hub.docker.com/r/jamesjj/dmarc-report-ses-tsv/)
 
 # DMARC Report: SES to TSV
 
