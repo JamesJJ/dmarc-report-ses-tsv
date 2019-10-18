@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"github.com/jamesjj/podready"
 	"github.com/jamiealquiza/envy"
 	"math/rand"
 	"os"
@@ -56,6 +57,8 @@ func main() {
 	}
 	envy.Parse("DMARC")
 	flag.Parse()
+
+	podready.Wait()
 
 	if *conf.sqsName == "" ||
 		*conf.sqsRegion == "" ||

@@ -40,4 +40,6 @@ COPY --from=build_image --chown=root:root /go/bin/app /app
 
 USER app_user:app_user
 
+ENV PODREADY_VERBOSE=true
+
 CMD ["/app"]
