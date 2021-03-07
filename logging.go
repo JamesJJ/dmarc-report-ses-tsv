@@ -12,13 +12,13 @@ var (
 	Error *log.Logger
 )
 
-func logInit(conf config) {
+func logInit(verbose bool) {
 
 	errorHandle := os.Stderr
 	infoHandle := os.Stdout
 
 	debugHandle := ioutil.Discard
-	if *conf.logVerbose {
+	if verbose {
 		debugHandle = os.Stderr
 	}
 
