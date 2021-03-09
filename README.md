@@ -11,9 +11,9 @@
   4. [AWS Athena](https://aws.amazon.com/athena/) can be used to directly run interactive SQL queries against the TSV data in S3.
   5. [AWS Quicksight](https://aws.amazon.com/quicksight/) can be used to directly visualise TSV data stored in S3.
 
-This tool can be run ad-hoc, periodically as a traditional cron-job, or as a [Kubernetes CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
+This tool can be run ad-hoc, periodically as a traditional cron-job, as a [Kubernetes CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) or as an [AWS Serverless Application](./aws-serverless/README.md)
 
-We do _not_ aim to process incoming reports and output to S3 as quickly as possible. Small CPU and memory requiremnts are prioritized, and we aim to process a reasonably large number of reports before outputting the TSV to S3. This avoids excessive numbers of tiny TSV files stored to S3.
+**We do _not_ aim to process incoming reports and output to S3 as quickly as possible. Instead, this aims to process a reasonably large number of reports before outputting a single TSV file to S3. This avoids excessive numbers of tiny TSV files stored to S3.
 
 ## Configuration:
 
