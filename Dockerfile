@@ -10,19 +10,17 @@ RUN ["adduser","-h","/","-s","/sbin/nologin","-D","-H","app_user"]
 
 #-----------------------------------------#
 
-FROM golang:1.12-stretch as build_image
+FROM golang:1.16-stretch as build_image
 
 ARG BASE_IMAGE
 
 WORKDIR /go/src/app
 
-COPY *.go ./
+COPY . .
 
-RUN go get -d -v ./...
+RUN go build -o /go/bin/app -v
 
-RUN go test -v -cover ./...
-
-RUN go install -v ./...
+RUN go test -v -cover
 
 #-----------------------------------------#
 
