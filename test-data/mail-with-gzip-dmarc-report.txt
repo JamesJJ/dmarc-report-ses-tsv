@@ -1,0 +1,31 @@
+Return-Path: <noreply-dmarc-support@google.com>
+Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com [209.85.219.74])
+ by inbound-smtp.us-west-2.amazonaws.com with SMTP id d5479lcj5r81ba4094338e6aitr35dakvd2tdq01
+ for dmarc@example.com;
+ Sat, 06 Mar 2021 15:32:02 +0000 (UTC)
+Received: by mail-qv1-f74.google.com with SMTP id d26so3879325qve.7
+        for <dmarc@example.com>; Sat, 06 Mar 2021 07:32:02 -0800 (PST)
+MIME-Version: 1.0
+X-Received: by 2002:a37:49c4:: with SMTP id w187mr13503776qka.444.1615044721641;
+ Sat, 06 Mar 2021 07:32:01 -0800 (PST)
+Date: Fri, 05 Mar 2021 15:59:59 -0800
+Message-ID: <1442744299377440477@google.com>
+Subject: Report domain: example.com Submitter: google.com Report-ID: 1442744299377440477
+From: noreply-dmarc-support@google.com
+To: dmarc@example.com
+Content-Type: application/gzip; 
+	name="google.com!example.com!1614902400!1614988799.gz"
+Content-Disposition: attachment; 
+	filename="google.com!example.com!1614902400!1614988799.gz"
+Content-Transfer-Encoding: base64
+
+H4sIACDiRmACA41UwZabMAy871fk5Q4kLAlJn9fbU7+gPfMcI8BdbLm2Ccl+fU0whE166IGHGUmj
+0VgJeb/IdnUGYwWqt/U23qxXoDiWQtVv618/f0SH9eqdvpAKoDwx/kFfVitiQKNxhQTHSubYgHkU
+TV0oJoHWiHULMUdJkhkcc0Ay0VKFnqG9RqVkhke20wPd92XZmBdqLs6wgqNyjLtCqApp45y235Ik
+lMb30oQlTNkeTJJm+/3usPFcz/UjcRhDlHSbZWnun+PxNffvTZbnJLmHx3Q/KhSGqToM46ET1ELR
+7X6bHTdptvHNRmSKgyrH6OGQH49eiprIkq9sc7elp0RjK/i10N2pFbaBWQh6dxSFC5N6MixgYwIr
+P4SkhiTjIYBWVzdseI+QpgZ+A3ck0QGxd8hOmOaObofZhsNN6790eTc5mkmiwX42wWJnOBRC010W
+e5fiNI93nn+Gp0SOnfKtSDIeJjh0gzNrO29aOQUGJ4TVaIXzyzvrXmKLzMGIyi+VT5g9CSNXITAb
+s5jxoau/p2kyIkpQTlTC/3jmsgZYCaaoDMqv97MMBKanesI61xQGbNe6O+WD3HDRTLJPVBbs8/WH
+3R5YqGbWDrt1+1jMDK33Cg1t7Enpg34FZRny5rO//tn1veSA5VV2/dmbMqXOziwFkYVnC3FpHu1i
+K52OsHNxZ6MerIvS+D9VK1TwqHpxPX6HH4waksftI8n9n+ovyMZsxd0EAAA=
