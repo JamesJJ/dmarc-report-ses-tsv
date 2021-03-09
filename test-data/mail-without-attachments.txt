@@ -1,0 +1,28 @@
+Return-Path: <mta@example.net>
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+ by inbound-smtp.us-west-2.amazonaws.com with SMTP id iu7tkbdoal4h2ie718477eip3btrucd8j10d7r81
+ for dmarc@example.com;
+ Fri, 05 Mar 2021 07:37:42 +0000 (UTC)
+Received: by mail-lf1-f54.google.com with SMTP id q25so1984803lfc.8
+        for <dmarc@example.com>; Thu, 04 Mar 2021 23:37:42 -0800 (PST)
+X-Received: by 2002:a05:6512:3cc:: with SMTP id w12mr4541290lfp.650.1614929860188;
+ Thu, 04 Mar 2021 23:37:40 -0800 (PST)
+MIME-Version: 1.0
+From: MTA <mta@example.net>
+Date: Fri, 5 Mar 2021 15:37:29 +0800
+Message-ID: <CAJa6Pxsbt7H7xL58ycAu2fvVSRcTG5uh@mail.example.net>
+Subject: A mail without any attachments
+To: dmarc@example.com
+Content-Type: multipart/alternative; boundary="000000000000a76a3405bcc52818"
+
+--000000000000a76a3405bcc52818
+Content-Type: text/plain; charset="UTF-8"
+
+hi
+
+--000000000000a76a3405bcc52818
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr"><div class="gmail_default" style="color:#20124d">hi</div></div>
+
+--000000000000a76a3405bcc52818--

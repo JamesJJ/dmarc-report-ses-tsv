@@ -13,7 +13,8 @@ import (
 )
 
 var (
-	wg sync.WaitGroup
+	wg   sync.WaitGroup
+	conf config
 )
 
 type config struct {
@@ -21,6 +22,7 @@ type config struct {
 	sqsRegion                *string
 	s3Name                   *string
 	s3Region                 *string
+	s3OutputPathPattern      *string
 	sqsPollTimeout           *int64
 	sqsPollMaxMessages       *int64
 	sqsVisibilityTimeout     *int64
@@ -34,17 +36,19 @@ type config struct {
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
+	logInit(false)
 }
 
 func main() {
 
 	runDate := time.Now().UTC().Format("20060102")
 
-	conf := config{
+	conf = config{
 		flag.String("sqs", "", "Name of the SQS queue to poll [MANDATORY]"),
 		flag.String("sqsregion", "", "AWS region of SQS queue [MANDATORY]"),
 		flag.String("bucket", "", "Name of the S3 bucket to store TSV files [MANDATORY]"),
 		flag.String("bucketregion", "", "AWS region of S3 bucket [MANDATORY]"),
+		flag.String("s3outputpathpattern", "data-dmarc/parsed-records-%s-%s.tsv.gz", "Path pattern for output files in S3"),
 		flag.Int64("polltimeout", 10, "SQS slow poll timeout, 1-20"),
 		flag.Int64("pollmessages", 10, "SQS maximum messages per poll, 1-10"),
 		flag.Int64("sqsprocessingtime", 3600, "SQS visibility timeout [DO NOT CHANGE]"),
@@ -74,9 +78,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	logInit(conf)
+	logInit(*conf.logVerbose)
 
-	writeTSVChan := make(chan *[]string)
+	writeTSVChan := make(chan *CsvRow)
 	uploadToS3Chan := make(chan *bytes.Buffer)
 	deleteSqsChan := make(chan *string)
 	moveS3FileChan := make(chan *S3EventRecord)
@@ -112,8 +116,8 @@ func main() {
 	go func(conf config, wg *sync.WaitGroup) {
 		defer wg.Done()
 
-		for file := range uploadToS3Chan { // TODO: Fix filename
-			s3OutputPath := fmt.Sprintf("dmarc-data/go-upload-test-%s-%s.tsv.gz", time.Now().UTC().Format("20060102-150405"), RandStringBytes(6))
+		for file := range uploadToS3Chan {
+			s3OutputPath := fmt.Sprintf(*conf.s3OutputPathPattern, time.Now().UTC().Format("20060102-150405"), RandStringBytes(6))
 			S3Upload( // TODO: ERROR CHECKING
 				conf.s3Name,
 				&s3OutputPath,

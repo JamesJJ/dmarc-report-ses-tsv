@@ -1,0 +1,25 @@
+Return-Path: <noreply-dmarc-support@google.com>
+Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com [209.85.219.74])
+ by inbound-smtp.us-west-2.amazonaws.com with SMTP id d5479lcj5r81ba4094338e6aitr35dakvd2tdq01
+ for dmarc@example.com;
+ Sat, 06 Mar 2021 15:32:02 +0000 (UTC)
+Received: by mail-qv1-f74.google.com with SMTP id d26so3879325qve.7
+        for <dmarc@example.com>; Sat, 06 Mar 2021 07:32:02 -0800 (PST)
+MIME-Version: 1.0
+X-Received: by 2002:a37:49c4:: with SMTP id w187mr13503776qka.444.1615044721641;
+ Sat, 06 Mar 2021 07:32:01 -0800 (PST)
+Date: Fri, 05 Mar 2021 15:59:59 -0800
+Message-ID: <1442744299377440478@google.com>
+Subject: Report domain: example.com Submitter: google.com Report-ID: 1442744299377440478
+From: noreply-dmarc-support@google.com
+To: dmarc@example.com
+Content-Type: application/zip; 
+	name="google.com!example.com!1614902400!1614988799.zip"
+Content-Disposition: attachment; 
+	filename="google.com!example.com!1614902400!1614988799.zip"
+Content-Transfer-Encoding: base64
+
+UEsDBAoAAAAAAI4WaVLAW96yHQAAAB0AAAAIABwAZmlsZS54bWxVVAkAA+ziRmDs4kZgdXgLAAEE
+6AMAAAToAwAAVHVlIE1hciAgOSAwMjo1MjoyOCBVVEMgMjAyMQpQSwECHgMKAAAAAACOFmlSwFve
+sh0AAAAdAAAACAAYAAAAAAABAAAAtIEAAAAAZmlsZS54bWxVVAUAA+ziRmB1eAsAAQToAwAABOgD
+AABQSwUGAAAAAAEAAQBOAAAAXwAAAAAA
