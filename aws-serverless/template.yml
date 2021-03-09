@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Lambda application that sends an email when files appear in S3
+Parameters:
+  BUCKET:
+    Type: String
+  DELETESQS:
+    Type: String
+    Default: "true"
+  EMPTYPOLLS:
+    Type: String
+    Default: "1"
+  MOVE:
+    Type: String
+    Default: "archive-dmarc"
+  VERBOSE:
+    Type: String
+    Default: "false"
+Resources:
+  SqsQueue:
+    Type: AWS::SQS::Queue
+    Properties: 
+      DelaySeconds: "0"
+      MaximumMessageSize: "262144"
+      MessageRetentionPeriod: "1209600"
+      QueueName: ses-received-dmarc-emails
+      ReceiveMessageWaitTimeSeconds: "10"
+      VisibilityTimeout: "3600"
+  SQSQueuePolicy: 
+    Type: AWS::SQS::QueuePolicy
+    Properties: 
+      Queues: 
+        - !Ref SqsQueue
+      PolicyDocument: 
+        Statement: 
+          - Action: 
+              - "SQS:SendMessage" 
+            Effect: "Allow"
+            Resource: !GetAtt [ "SqsQueue", "Arn" ]
+            Principal:  
+              Service: 
+                - "s3.amazonaws.com"
+            Condition:
+              StringEquals:
+                "aws:SourceAccount": !Ref AWS::AccountId
+              ArnLike:
+                "aws:SourceArn": !Join [ "", [ "arn:aws:s3:*:*:", !Ref BUCKET ] ]
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: !Join [ "", [ "/aws/lambda/", !Ref Function ] ]
+      RetentionInDays: "90"
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      Runtime: go1.x
+      CodeUri: .
+      Description: Parse DMARC report emails for analysis
+      Timeout: 90
+      MemorySize: 128
+      Environment:
+        Variables:
+          DMARC_BUCKET: !Ref BUCKET
+          DMARC_BUCKETREGION: !Ref AWS::Region
+          DMARC_DELETESQS: !Ref DELETESQS
+          DMARC_EMPTYPOLLS: !Ref EMPTYPOLLS
+          DMARC_MOVE: !Ref MOVE
+          DMARC_SQS: !GetAtt [ "SqsQueue", "QueueName"  ]
+          DMARC_SQSREGION: !Ref AWS::Region
+          DMARC_VERBOSE: !Ref VERBOSE
+      Events:
+        Schedule:
+          Type: Schedule
+          Properties:
+            Description: "Trigger Lambda periodically"
+            Enabled: true
+            Schedule: "cron(50 20 * * ? *)"
+            RetryPolicy:
+              MaximumRetryAttempts: "0"
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+          - Sid: AllowS3
+            Effect: Allow
+            Resource:
+              - !Join [ "", [ "arn:aws:s3:::", !Ref BUCKET ] ]
+              - !Join [ "", [ "arn:aws:s3:::", !Ref BUCKET, "/*" ] ]
+            Action:
+              - "s3:DeleteObject"
+              - "s3:GetBucketLocation"
+              - "s3:GetObject"
+              - "s3:ListBucket"
+              - "s3:PutObject"
+          - Sid: AllowSqsRead
+            Effect: Allow
+            Resource:
+              - !GetAtt [ "SqsQueue", "Arn"  ]
+            Action:
+              - "sqs:ChangeMessageVisibility"
+              - "sqs:ChangeMessageVisibilityBatch"
+              - "sqs:DeleteMessage"
+              - "sqs:DeleteMessageBatch"
+              - "sqs:GetQueueAttributes"
+              - "sqs:GetQueueUrl"
+              - "sqs:ListQueues"
+              - "sqs:ReceiveMessage"
+Outputs:
+  SqsQueueARN: 
+    Description: "ARN of SQS Queue"
+    Value: 
+      Fn::GetAtt: 
+        - "SqsQueue"
+        - "Arn"

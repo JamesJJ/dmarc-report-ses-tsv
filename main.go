@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	runtime "github.com/aws/aws-lambda-go/lambda"
 	"github.com/jamesjj/podready"
 	"github.com/jamiealquiza/envy"
 	"math/rand"
@@ -40,7 +41,14 @@ func init() {
 }
 
 func main() {
+	if os.Getenv("AWS_LAMBDA_FUNCTION_NAME") != "" {
+		runtime.Start(handleRequest)
+	} else {
+		run()
+	}
+}
 
+func run() {
 	runDate := time.Now().UTC().Format("20060102")
 
 	conf = config{
