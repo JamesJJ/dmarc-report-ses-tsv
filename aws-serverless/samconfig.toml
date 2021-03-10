@@ -2,8 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "dmarc-report-lambda"
-s3_prefix = "dmarc_report_lambda"
+stack_name = "dmarc-report-parser"
+s3_prefix = "dmarc-report-parser"
 region = "us-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
+parameter_overrides = "DELETESQS=\"true\" EMPTYPOLLS=\"1\" MOVE=\"archive-dmarc\" VERBOSE=\"false\""

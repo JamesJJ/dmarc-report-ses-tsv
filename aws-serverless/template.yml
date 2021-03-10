@@ -23,7 +23,7 @@ Resources:
       DelaySeconds: "0"
       MaximumMessageSize: "262144"
       MessageRetentionPeriod: "1209600"
-      QueueName: ses-received-dmarc-emails
+      QueueName: !Join [ "-", [ !Ref AWS::StackName , "sqs" ] ]
       ReceiveMessageWaitTimeSeconds: "10"
       VisibilityTimeout: "3600"
   SQSQueuePolicy: 
@@ -53,6 +53,7 @@ Resources:
   Function:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Join [ "-", [ !Ref AWS::StackName , "lambda" ] ]
       Handler: main
       Runtime: go1.x
       CodeUri: .
