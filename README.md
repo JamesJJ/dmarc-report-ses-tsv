@@ -1,6 +1,3 @@
-[![Docker Automated build](https://img.shields.io/docker/cloud/automated/jamesjj/dmarc-report-ses-tsv)](https://hub.docker.com/r/jamesjj/dmarc-report-ses-tsv/)
-[![Docker Automated build](https://img.shields.io/docker/cloud/build/jamesjj/dmarc-report-ses-tsv)](https://hub.docker.com/r/jamesjj/dmarc-report-ses-tsv/)
-
 # DMARC Report: SES to TSV
 
 *This component aims to provide DMARC Report data in TSV or CSV format, so that it can easily be ingested and visualised by business intelligence or analysis tools, for example AWS QuickSight.*
