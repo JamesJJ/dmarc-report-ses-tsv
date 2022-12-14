@@ -12,7 +12,7 @@ You'll need:
 
 ## Usage
 
- 1. Execute `./deploy.sh` 
+ 1. Execute `./deploy.sh -g`
  2. When asked `Parameter BUCKET:`, provide the name of the S3 bucket that you have set-up to collect DMARC emails received by AWS SES. *Ensure SES puts the emails in a sub-directory and not the root of the bucket: specify a prefix when you configure the S3 receipt rule in SQS.*
  3. The defaults are usually suitable for the other prompts.
  4. When the stack has finished deploying, it will show the `SqsQueueArn` in the outputs. You should set the S3 bucket to send `s3:ObjectCreated:Put` events to this SQS ARN. S3 events to SQS determines which raw DMARC email files are processed.
