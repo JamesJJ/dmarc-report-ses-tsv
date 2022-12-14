@@ -44,24 +44,24 @@ func loadTestData(t *testing.T, filename string) *bytes.Reader {
 func TestReadMailToRows(t *testing.T) {
 
 	fileTests := []FileTest{
-		FileTest{
+		{
 			File:         "./test-data/mail-with-bad-gzip.txt",
 			ExpectedRows: 0,
 			Rows:         CsvRows{},
-		}, FileTest{
+		}, {
 			File:         "./test-data/mail-with-bad-zip.txt",
 			ExpectedRows: 0,
 			Rows:         CsvRows{},
-		}, FileTest{
+		}, {
 			File:         "./test-data/mail-with-non-dmarc-zip.txt",
 			ExpectedRows: 0,
 			Rows:         CsvRows{},
-		}, FileTest{
+		}, {
 			File:         "./test-data/mail-without-attachments.txt",
 			ExpectedRows: 0,
 			Rows:         CsvRows{},
 		},
-		FileTest{
+		{
 			File:         "./test-data/mail-with-zipped-dmarc-report.txt",
 			ExpectedRows: 1,
 			Rows: CsvRows{
@@ -102,7 +102,7 @@ func TestReadMailToRows(t *testing.T) {
 				},
 			},
 		},
-		FileTest{
+		{
 			File:         "./test-data/mail-with-gzip-dmarc-report.txt",
 			ExpectedRows: 1,
 			Rows: CsvRows{

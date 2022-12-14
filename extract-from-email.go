@@ -228,6 +228,9 @@ func DelimitedAppend(delimiter string, sb *strings.Builder, s string) {
 func flattenDMARCRecord(msgToFirstAddress string, report *Feedback) *CsvRows {
 	var rows CsvRows
 	for rrIndex, rrRecord := range report.Records {
+		if *conf.excludeDispositionNone && strings.EqualFold(rrRecord.Row.Policy.Disposition, "none") {
+			continue
+		}
 		singleRow, err := generateDMARCRow(msgToFirstAddress, &report.Metadata, &report.Policy, &rrRecord)
 		if err != nil {
 			Error.Printf("flattenDMARCRecord Error: %v", err)

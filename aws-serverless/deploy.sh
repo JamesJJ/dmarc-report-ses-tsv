@@ -18,7 +18,7 @@ GOOS=linux GOARCH=amd64 go build -o main
 cd -
 
 mv "${FUNC_DIR_RELATIVE}/main" ./
-sam deploy -g --tags "tenant=fcg"
+sam deploy --tags "project=dmarc_report" $@
 rm -f ./main
 
 

@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func sqsDelete(conf config, deleteSqsChan chan *string) error {
+func sqsDelete(deleteSqsChan chan *string) error {
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(*conf.sqsRegion)},
@@ -44,11 +44,14 @@ func sqsDelete(conf config, deleteSqsChan chan *string) error {
 	return nil
 }
 
-func PollSQS(conf config) ([]*S3EventMsg, error) {
+func PollSQS() ([]*S3EventMsg, error) {
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(*conf.sqsRegion)},
 	)
+	if err != nil {
+		return nil, fmt.Errorf("Unable to establish session: %v", err)
+	}
 
 	Debug.Printf("Polling SQS: %s, in %s", *conf.sqsName, *conf.sqsRegion)
 

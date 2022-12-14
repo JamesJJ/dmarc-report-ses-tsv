@@ -10,7 +10,7 @@ import (
 func gracefulStop(additional func()) {
 
 	// Handle ^C and SIGTERM gracefully
-	var gracefulStop = make(chan os.Signal)
+	var gracefulStop = make(chan os.Signal, 1)
 	signal.Notify(gracefulStop, syscall.SIGTERM, syscall.SIGINT)
 	go func() {
 		sig := <-gracefulStop

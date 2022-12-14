@@ -43,7 +43,7 @@ Configuration is specified using command line flags or environment variables. Th
         SQS slow poll timeout, 1-20 [DMARC_POLLTIMEOUT] (default 10)
         
   -sqs string
-        Name of the SQS queue to poll [MANDATORY] [DMARC_SQS] 
+        Name of the SQS queue to poll [MANDATORY] [DMARC_SQS]
         
   -sqsprocessingtime int
         SQS visibility timeout [DO NOT CHANGE] [DMARC_SQSPROCESSINGTIME] (default 3600)
@@ -51,6 +51,9 @@ Configuration is specified using command line flags or environment variables. Th
   -sqsregion string
         AWS region of SQS queue [MANDATORY] [DMARC_SQSREGION]
         
+  -excludedispositionnone
+        Silently discard records where having a disposition value of "none" [DMARC_EXCLUDEDISPOSITIONNONE]
+
   -verbose
         Show detailed information during run [DMARC_VERBOSE]
 ```

@@ -7,4 +7,4 @@ s3_prefix = "dmarc-report-parser"
 region = "us-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
-parameter_overrides = "DELETESQS=\"true\" EMPTYPOLLS=\"1\" MOVE=\"archive-dmarc\" VERBOSE=\"false\""
+parameter_overrides = "EXCLUDEDISPOSITIONNONE=\"false\" DELETESQS=\"true\" EMPTYPOLLS=\"1\" MOVE=\"archive-dmarc\" VERBOSE=\"false\""

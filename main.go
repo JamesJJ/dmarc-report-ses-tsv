@@ -32,25 +32,13 @@ type config struct {
 	moveFilesAfterProcessing *string
 	logVerbose               *bool
 	sqsDelete                *bool
+	excludeDispositionNone   *bool
 	runDate                  *string
 }
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
 	logInit(false)
-}
-
-func main() {
-	if os.Getenv("AWS_LAMBDA_FUNCTION_NAME") != "" {
-		runtime.Start(handleRequest)
-	} else {
-		run()
-	}
-}
-
-func run() {
-	runDate := time.Now().UTC().Format("20060102")
-
 	conf = config{
 		flag.String("sqs", "", "Name of the SQS queue to poll [MANDATORY]"),
 		flag.String("sqsregion", "", "AWS region of SQS queue [MANDATORY]"),
@@ -65,8 +53,25 @@ func run() {
 		flag.String("move", "", "Move email to this S3 prefix after processing. Date will be automatically added"),
 		flag.Bool("verbose", false, "Show detailed information during run"),
 		flag.Bool("deletesqs", true, "Delete messages from SQS after processing"),
-		&runDate,
+		flag.Bool("excludedispositionnone", false, "Exclude DMARC records with 'none' disposition"),
+		nil,
 	}
+
+}
+
+func main() {
+	if os.Getenv("AWS_LAMBDA_FUNCTION_NAME") != "" {
+		runtime.Start(handleRequest)
+	} else {
+		run()
+	}
+}
+
+func run() {
+
+	runDate := time.Now().UTC().Format("20060102")
+	conf.runDate = &runDate
+
 	envy.Parse("DMARC")
 	flag.Parse()
 
@@ -95,33 +100,33 @@ func run() {
 
 	if *conf.moveFilesAfterProcessing != "" {
 		wg.Add(1)
-		go func(conf config, wg *sync.WaitGroup, moveS3FileChan chan *S3EventRecord) {
+		go func(wg *sync.WaitGroup, moveS3FileChan chan *S3EventRecord) {
 			defer wg.Done()
 			for {
-				err := S3Move(conf, moveS3FileChan)
+				err := S3Move(moveS3FileChan)
 				if err == nil {
 					break
 				}
 				time.Sleep(3 * time.Second)
 			}
-		}(conf, &wg, moveS3FileChan)
+		}(&wg, moveS3FileChan)
 
 	}
 
 	wg.Add(1)
-	go func(conf config, wg *sync.WaitGroup, deleteSqsChan chan *string) {
+	go func(wg *sync.WaitGroup, deleteSqsChan chan *string) {
 		defer wg.Done()
 		for {
-			err := sqsDelete(conf, deleteSqsChan)
+			err := sqsDelete(deleteSqsChan)
 			if err == nil {
 				break
 			}
 			time.Sleep(3 * time.Second)
 		}
-	}(conf, &wg, deleteSqsChan)
+	}(&wg, deleteSqsChan)
 
 	wg.Add(1)
-	go func(conf config, wg *sync.WaitGroup) {
+	go func(wg *sync.WaitGroup) {
 		defer wg.Done()
 
 		for file := range uploadToS3Chan {
@@ -134,16 +139,16 @@ func run() {
 			)
 			returnToPool(file)
 		}
-	}(conf, &wg)
+	}(&wg)
 
 	wg.Add(1)
-	go func(conf config, wg *sync.WaitGroup) {
+	go func(wg *sync.WaitGroup) {
 		defer func() {
 			close(uploadToS3Chan)
 			wg.Done()
 		}()
-		WriteTSV(conf, writeTSVChan, uploadToS3Chan)
-	}(conf, &wg)
+		WriteTSV(writeTSVChan, uploadToS3Chan)
+	}(&wg)
 
 	gracefulStop(func() {})
 
@@ -152,7 +157,7 @@ func run() {
 
 		Debug.Printf("pollCount=%d", pollCount)
 
-		s3records, err := PollSQS(conf)
+		s3records, err := PollSQS()
 		if err != nil {
 			Error.Printf("Failed to poll SQS: %v", err)
 			pollCount--

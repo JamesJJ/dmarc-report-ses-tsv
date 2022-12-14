@@ -16,6 +16,9 @@ Parameters:
   VERBOSE:
     Type: String
     Default: "false"
+  EXCLUDEDISPOSITIONNONE:
+    Type: String
+    Default: "false"
 Resources:
   SqsQueue:
     Type: AWS::SQS::Queue
@@ -70,6 +73,7 @@ Resources:
           DMARC_SQS: !GetAtt [ "SqsQueue", "QueueName"  ]
           DMARC_SQSREGION: !Ref AWS::Region
           DMARC_VERBOSE: !Ref VERBOSE
+          DMARC_EXCLUDEDISPOSITIONNONE: !Ref EXCLUDEDISPOSITIONNONE
       Events:
         Schedule:
           Type: Schedule

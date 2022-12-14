@@ -35,7 +35,7 @@ func S3RenameFile(svc *s3.S3, bucket *string, source *string, destination *strin
 	return nil
 }
 
-func S3Move(conf config, moveS3FileChan chan *S3EventRecord) error {
+func S3Move(moveS3FileChan chan *S3EventRecord) error {
 
 	// This session is using conf for region, so is in report output bucket region
 	// Files being moved are in email input bucket region

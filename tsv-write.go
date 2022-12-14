@@ -17,7 +17,7 @@ func returnToPool(b *bytes.Buffer) {
 	bufPool.Put(b)
 }
 
-func WriteTSV(conf config, records <-chan *CsvRow, tsvDataOut chan<- *bytes.Buffer) {
+func WriteTSV(records <-chan *CsvRow, tsvDataOut chan<- *bytes.Buffer) {
 
 	// TODO: Better actions if here finds errors
 
